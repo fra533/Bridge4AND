@@ -295,9 +295,9 @@ def crossref_with_metavalidation_pipeline(
     print(f"Errors: {stats['errors']}")
 
 if __name__ == "__main__":
-    input_file = "data/Bondvalidation.json"
+    input_file = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BOND-OC\WhoIsWho\bond\dataset\data\src\sna-test\sna_test_pub.json"
     manual_cutoff = 35.0  
-    output_dir = "results/Bond_crossref_validated"
+    output_dir = "results/Bond_test_crossref_validated"
     cache_file = "results/crossref_cache.json"  # Specifica il file di cache
     
     crossref_with_metavalidation_pipeline(
