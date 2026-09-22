@@ -2,45 +2,46 @@
 
 Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibliografici utilizzando Crossref e OpenCitations.
 
-<img src="bondforoc\Gemini_Generated_Image_ap7suuap7suuap7s.png" alt="shot" style="zoom:50%;" />
-
 
 ```mermaid
 flowchart TD
-    %% Styling delle classi
+    %% Class definitions
     classDef s1 fill:#e8eff7,stroke:#1c4e80,stroke-width:2px,color:#1c4e80;
     classDef s2 fill:#e6f4f4,stroke:#007373,stroke-width:2px,color:#007373;
     classDef s3 fill:#edf7ef,stroke:#2d7d41,stroke-width:2px,color:#2d7d41;
     classDef s4 fill:#fdf4eb,stroke:#af5f14,stroke-width:2px,color:#af5f14;
     classDef s5 fill:#f4ebf7,stroke:#692d87,stroke-width:2px,color:#692d87;
-    classDef file fill:#f8f9fb,stroke:#b9c0ca,stroke-width:1px,color:#333;
+    classDef fileNode fill:#f8f9fb,stroke:#b9c0ca,stroke-width:1px,color:#333;
 
-    IN(["gold_standard.csv"]):::file --> S1
+    IN(["gold_standard.csv"]):::fileNode --> S1
 
     subgraph Row1 [ ]
         direction LR
-        S1["<b>Stage 1: Gold Standard Prep</b><br/><code>process_gold_standard_1.py</code><br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries & title checks<br/>• Stratified Train/Valid dataset split"]:::s1
+        S1["<b>Stage 1: Gold Standard Prep</b><br/>process_gold_standard_1.py<br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries &amp; title checks<br/>• Stratified Train/Valid dataset split"]:::s1
         
-        S2["<b>Stage 2: Cutoff Calibration</b><br/><code>crossref_query_2.py</code><br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Φ_valid)"]:::s2
+        S2["<b>Stage 2: Cutoff Calibration</b><br/>crossref_query_2.py<br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Phi_valid)"]:::s2
         
-        S3["<b>Stage 3: Large-Scale Validation</b><br/><code>crossref_query_for_Bond_3.py</code><br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ τ_op ∧ Φ_valid"]:::s3
+        S3["<b>Stage 3: Large-Scale Validation</b><br/>crossref_query_for_Bond_3.py<br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ tau_op &amp; Phi_valid"]:::s3
 
-        S1 -- "valid_set.csv<br/>train_set.csv" --> S2
-        S2 -- "<b>Calibrated Cutoff</b><br/>τ_op = 35.00" --> S3
+        S1 -->|"valid_set.csv<br/>train_set.csv"| S2
+        S2 -->|"<b>Calibrated Cutoff</b><br/>tau_op = 35.00"| S3
     end
 
     subgraph Row2 [ ]
         direction LR
-        S4["<b>Stage 4: OpenCitations Enrichment</b><br/><code>opencitations_query_4.py</code><br/>• OpenCitations META API: title, venue, year, co-authors<br/>• OpenCitations INDEX API: incoming/outgoing citation links<br/>• Local JSON caching for structural completeness"]:::s4
+        S4["<b>Stage 4: OpenCitations Enrichment</b><br/>opencitations_query_4.py<br/>• OpenCitations META API: title, venue, year, co-authors<br/>• OpenCitations INDEX API: incoming/outgoing citation links<br/>• Local JSON caching for structural completeness"]:::s4
         
-        S5["<b>Stage 5: Author-Centric Transform</b><br/><code>sna_raw_creation.py</code><br/>• Author name normalization (first_last)<br/>• Mapping paper IDs to real author entities<br/>• Preserving WhoIsWho ground-truth clusters"]:::s5
+        S5["<b>Stage 5: Author-Centric Transform</b><br/>sna_raw_creation.py<br/>• Author name normalization (first_last)<br/>• Mapping paper IDs to real author entities<br/>• Preserving WhoIsWho ground-truth clusters"]:::s5
 
-        S4 -- "converted_metadata.json<br/><b>(Paper-Centric Schema)</b>" --> S5
+        S4 -->|"converted_metadata.json<br/><b>(Paper-Centric Schema)</b>"| S5
     end
 
     S3 -->|"validated_keys_dois.csv"| S4
-    S5 --> OUT["<b>OC-AND Benchmark Output:</b><br/><code>converted_metadata_raw.json</code><br/><i>(Author-Centric Dataset)</i>"]:::file
+    S5 --> OUT["<b>OC-AND Benchmark Output:</b><br/>converted_metadata_raw.json<br/><i>(Author-Centric Dataset)</i>"]:::fileNode
 
+    style Row1 fill:none,stroke:none
+    style Row2 fill:none,stroke:none
+```
 
 
 ## 📋 Indice
