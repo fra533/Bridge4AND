@@ -43,9 +43,9 @@ flowchart LR
 ## 📋 Indice
 
 - [Panoramica](#panoramica)
+- [Guida all'Uso](#guida-alluso)
 - [Requisiti](#requisiti)
 - [Struttura della Pipeline](#struttura-della-pipeline)
-- [Guida all'Uso](#guida-alluso)
 - [File di Output](#file-di-output)
 - [Statistiche Attese](#statistiche-attese)
 - [Note Tecniche](#note-tecniche)
@@ -84,6 +84,78 @@ converted_metadata.json
 converted_metadata_raw.json
 ```
 
+---
+## 🚀 Guida all'Uso
+
+### Workflow Completo
+
+#### Step 1: Prepara Gold Standard
+```bash
+python process_gold_standard_1.py
+```
+✅ Verifica: Controlla `results/training_set.csv` e `results/validation_set.csv`
+
+#### Step 2: Trova Cutoff Ottimale
+```bash
+python crossref_query_2.py
+```
+✅ Verifica: Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
+
+#### Step 3: Valida Dataset Completo
+```bash
+# Aggiorna il cutoff in crossref_query_for_Bond_3.py
+# Poi esegui:
+python crossref_query_for_Bond_3.py
+```
+✅ Verifica: Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
+
+#### Step 4: Recupera Metadati OpenCitations
+```bash
+python opencitations_query_4.py
+
+# Seleziona modalità:
+# 1 = Solo metadati (veloce)
+# 2 = Metadati + citazioni (completo ma lento)
+```
+✅ Verifica: Controlla `results/OC_results/converted_metadata.json`
+
+#### Step 5: Crea Formato Autore-Centrico
+```bash
+python sna_raw_creation.py
+```
+✅ Verifica: Controlla `results/converted_metadata_raw.json`
+
+---
+
+## 📁 File di Output
+
+### Struttura Directory Results
+```
+results/
+├── training_set.csv
+├── validation_set.csv
+├── failed_requests.csv
+├── crossref_score_analysis.png
+├── crossref_cutoff_analysis.csv
+├── validation_results.csv
+├── validation_metrics.json
+├── wrong_matches_analysis.csv
+├── crossref_cache.json
+├── Bond_crossref_validated/
+│   ├── validated_keys_dois.csv
+│   ├── rejected_items.csv
+│   └── error_items.csv
+├── OC_results/
+│   ├── converted_metadata.json
+│   ├── opencitations_metadata.json
+│   ├── final_batch_notfound.json
+│   ├── processing_summary.json
+│   ├── opencitations_cache.json
+│   └── opencitations_app.log
+├── OC_results_with_citations/
+│   └── (stessi file di OC_results con citazioni)
+└── converted_metadata_raw.json
+```
 ---
 
 ## 💻 Requisiti
@@ -332,79 +404,6 @@ data/
   └── Bondvalidation.json
 ```
 
----
-
-## 🚀 Guida all'Uso
-
-### Workflow Completo
-
-#### Step 1: Prepara Gold Standard
-```bash
-python process_gold_standard_1.py
-```
-✅ Verifica: Controlla `results/training_set.csv` e `results/validation_set.csv`
-
-#### Step 2: Trova Cutoff Ottimale
-```bash
-python crossref_query_2.py
-```
-✅ Verifica: Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
-
-#### Step 3: Valida Dataset Completo
-```bash
-# Aggiorna il cutoff in crossref_query_for_Bond_3.py
-# Poi esegui:
-python crossref_query_for_Bond_3.py
-```
-✅ Verifica: Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
-
-#### Step 4: Recupera Metadati OpenCitations
-```bash
-python opencitations_query_4.py
-
-# Seleziona modalità:
-# 1 = Solo metadati (veloce)
-# 2 = Metadati + citazioni (completo ma lento)
-```
-✅ Verifica: Controlla `results/OC_results/converted_metadata.json`
-
-#### Step 5: Crea Formato Autore-Centrico
-```bash
-python sna_raw_creation.py
-```
-✅ Verifica: Controlla `results/converted_metadata_raw.json`
-
----
-
-## 📁 File di Output
-
-### Struttura Directory Results
-```
-results/
-├── training_set.csv
-├── validation_set.csv
-├── failed_requests.csv
-├── crossref_score_analysis.png
-├── crossref_cutoff_analysis.csv
-├── validation_results.csv
-├── validation_metrics.json
-├── wrong_matches_analysis.csv
-├── crossref_cache.json
-├── Bond_crossref_validated/
-│   ├── validated_keys_dois.csv
-│   ├── rejected_items.csv
-│   └── error_items.csv
-├── OC_results/
-│   ├── converted_metadata.json
-│   ├── opencitations_metadata.json
-│   ├── final_batch_notfound.json
-│   ├── processing_summary.json
-│   ├── opencitations_cache.json
-│   └── opencitations_app.log
-├── OC_results_with_citations/
-│   └── (stessi file di OC_results con citazioni)
-└── converted_metadata_raw.json
-```
 
 ---
 
