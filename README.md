@@ -4,45 +4,41 @@ Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibl
 
 
 ```mermaid
-flowchart TD
-    %% Class definitions
+flowchart LR
+    %% Palette colori coerente con TikZ
     classDef s1 fill:#e8eff7,stroke:#1c4e80,stroke-width:2px,color:#1c4e80;
     classDef s2 fill:#e6f4f4,stroke:#007373,stroke-width:2px,color:#007373;
     classDef s3 fill:#edf7ef,stroke:#2d7d41,stroke-width:2px,color:#2d7d41;
     classDef s4 fill:#fdf4eb,stroke:#af5f14,stroke-width:2px,color:#af5f14;
     classDef s5 fill:#f4ebf7,stroke:#692d87,stroke-width:2px,color:#692d87;
-    classDef fileNode fill:#f8f9fb,stroke:#b9c0ca,stroke-width:1px,color:#333;
+    classDef fileNode fill:#f8f9fb,stroke:#b9c0ca,stroke-width:1px,color:#222;
 
+    %% Input iniziale
     IN(["gold_standard.csv"]):::fileNode --> S1
 
-    subgraph Row1 [ ]
-        direction LR
-        S1["<b>Stage 1: Gold Standard Prep</b><br/>process_gold_standard_1.py<br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries &amp; title checks<br/>• Stratified Train/Valid dataset split"]:::s1
-        
-        S2["<b>Stage 2: Cutoff Calibration</b><br/>crossref_query_2.py<br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Phi_valid)"]:::s2
-        
-        S3["<b>Stage 3: Large-Scale Validation</b><br/>crossref_query_for_Bond_3.py<br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ tau_op &amp; Phi_valid"]:::s3
+    %% Riga Superiore: Stage 1 -> Stage 2 -> Stage 3
+    S1["<b>Stage 1: Gold Standard Prep</b><br/><i>process_gold_standard_1.py</i><br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries &amp; title checks<br/>• Stratified Train/Valid split"]:::s1
 
-        S1 -->|"valid_set.csv<br/>train_set.csv"| S2
-        S2 -->|"<b>Calibrated Cutoff</b><br/>tau_op = 35.00"| S3
-    end
+    S2["<b>Stage 2: Cutoff Calibration</b><br/><i>crossref_query_2.py</i><br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Phi_valid)"]:::s2
 
-    subgraph Row2 [ ]
-        direction LR
-        S4["<b>Stage 4: OpenCitations Enrichment</b><br/>opencitations_query_4.py<br/>• OpenCitations META API: title, venue, year, co-authors<br/>• OpenCitations INDEX API: incoming/outgoing citation links<br/>• Local JSON caching for structural completeness"]:::s4
-        
-        S5["<b>Stage 5: Author-Centric Transform</b><br/>sna_raw_creation.py<br/>• Author name normalization (first_last)<br/>• Mapping paper IDs to real author entities<br/>• Preserving WhoIsWho ground-truth clusters"]:::s5
+    S3["<b>Stage 3: Large-Scale Validation</b><br/><i>crossref_query_for_Bond_3.py</i><br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ tau_op &amp; Phi_valid"]:::s3
 
-        S4 -->|"converted_metadata.json<br/><b>(Paper-Centric Schema)</b>"| S5
-    end
+    S1 -->|"valid_set.csv<br/>train_set.csv"| S2
+    S2 -->|"<b>Calibrated Cutoff</b><br/>tau_op = 35.00"| S3
 
+    %% Discesa da Riga 1 a Riga 2
     S3 -->|"validated_keys_dois.csv"| S4
-    S5 --> OUT["<b>OC-AND Benchmark Output:</b><br/>converted_metadata_raw.json<br/><i>(Author-Centric Dataset)</i>"]:::fileNode
 
-    style Row1 fill:none,stroke:none
-    style Row2 fill:none,stroke:none
+    %% Riga Inferiore: Stage 4 -> Stage 5 -> Output
+    S4["<b>Stage 4: OpenCitations Enrichment</b><br/><i>opencitations_query_4.py</i><br/>• OpenCitations META API: metadata<br/>• OpenCitations INDEX API: citations<br/>• Local JSON caching"]:::s4
+
+    S5["<b>Stage 5: Author-Centric Transform</b><br/><i>sna_raw_creation.py</i><br/>• Author name normalization<br/>• Mapping paper IDs to authors<br/>• Preserving ground-truth clusters"]:::s5
+
+    OUT["<b>OC-AND Benchmark:</b><br/>converted_metadata_raw.json<br/><i>(Author-Centric Dataset)</i>"]:::fileNode
+
+    S4 -->|"converted_metadata.json<br/><b>(Paper-Centric)</b>"| S5
+    S5 --> OUT
 ```
-
 
 ## 📋 Indice
 
