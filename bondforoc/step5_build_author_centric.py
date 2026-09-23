@@ -143,9 +143,9 @@ def load_and_convert(input_file_path, output_file_path=r"C:\Users\franc\OneDrive
         print(f"Errore durante l'elaborazione: {e}")
         return None
 
-# Esempio di utilizzo
 if __name__ == "__main__":
-    # Esempio con dati di test
+
+    # Esempio 
     sna_valid_pub_example = {
         "rJZe1IHB": {
             "id": "rJZe1IHB",
@@ -192,44 +192,12 @@ if __name__ == "__main__":
         }
     }
     
-    # Test con dati di esempio che includono caratteri speciali
     print("=== Test con dati di esempio ===")
     result = build_sna_valid_raw(sna_valid_pub_example)
     print("Risultato:")
     for author, publications in result.items():
         print(f"  {author}: {publications}")
     
-    # Test con l'esempio problematico fornito
-    problematic_example = {
-        "PohImS1q": {
-            "id": "PohImS1q",
-            "title": "Transient thermal effect of semi-insulating GaAs photoconductive switch",
-            "authors": [
-                {
-                    "name": "Shi Wei",
-                    "org": "Department of Applied Physics,Xi'an University of Technology,Xi'an ,China"
-                },
-                {
-                    "name": "Xiangrong Ma",
-                    "org": "Xi'an University of Technology(Xi'an University of Technology,Xi'an Univ. of Technol.),Xi An,China"
-                },
-                {
-                    "name": "Xue Hong",
-                    "org": "Department of Applied Physics,Xi'an University of Technology,Xi'an ,China"
-                }
-            ],
-            "venue": "Acta Physica Sinica",
-            "year": 2010
-        }
-    }
-    
-    print("\n=== Test con esempio problematico ===")
-    result_problematic = build_sna_valid_raw(problematic_example)
-    print("Risultato:")
-    for author, publications in result_problematic.items():
-        print(f"  {author}: {publications}")
-        # Verifica che i nomi siano sicuri per i file
-        print(f"    -> Nome sicuro per file: ✓")
     
     print("\n=== Conversione del file reale ===")
     load_and_convert(r'C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\OC_train_results_with_citations\converted_metadata.json')
