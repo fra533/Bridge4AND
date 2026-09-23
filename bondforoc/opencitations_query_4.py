@@ -1,3 +1,45 @@
+"""
+opencitations_query_4.py — Stage 4: arricchimento con OpenCitations
+
+Recupera da OpenCitations i metadati delle pubblicazioni validate nello Stage 3
+e, opzionalmente, le citazioni, convertendo il risultato nel formato
+paper-centrico usato da BOND.
+
+Funzionamento:
+  1. Selezione interattiva della modalità: solo metadati, oppure metadati +
+     citazioni (INCLUDE_CITATIONS).
+  2. Eventuale riprocessamento dei DOI falliti in esecuzioni precedenti.
+  3. Fase di test sui primi TEST_BATCH_SIZE DOI, poi, previa conferma,
+     elaborazione dei rimanenti.
+  4. Per ogni DOI interroga Meta API (metadati) e, se richiesto, Index API v2
+     (/references e /citations).
+  5. Converte i metadati nel formato target (title, authors, venue, year,
+     keywords estratte dal titolo, citazioni).
+  Include cache locale, rate limiting, retry con exponential backoff sugli
+  errori transitori (429, 5xx, timeout) e salvataggio in caso di interruzione.
+
+Funzioni principali:
+  main()                       orchestrazione: retry, test batch, elaborazione completa
+  select_mode()                scelta interattiva della modalità
+  process_batch()              elaborazione di un intervallo di DOI
+  process_retry_batch()        riprocessamento dei DOI falliti
+  check_doi_in_opencitation()  query Meta con uso della cache
+  query_with_retry()           chiamata Meta API con retry/backoff
+  get_references() / get_citations()  citazioni uscenti / entranti (Index API)
+  convert_metadata_format()    conversione nel formato paper-centrico
+  parse_authors(), parse_year(), extract_keywords_from_title()  parsing dei campi
+  load_cache() / save_cache() / save_results()  persistenza
+
+Input:   validated_keys_dois.csv
+Output:  OC_results/ (oppure OC_results_with_citations/):
+         converted_metadata.json, opencitations_metadata.json,
+         final_batch_notfound.json, processing_summary.json,
+         cache, log e file dei candidati per il retry
+
+Dipendenze: requests; token OpenCitations
+"""
+
+
 import requests
 import json
 import logging

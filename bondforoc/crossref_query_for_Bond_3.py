@@ -1,3 +1,30 @@
+"""
+crossref_query_for_Bond_3.py — Stage 3: validazione Crossref su larga scala
+
+Applica il cutoff calibrato nello Stage 2 all'intero benchmark per assegnare un
+DOI a ogni pubblicazione.
+
+Funzionamento:
+  1. Per ogni pubblicazione del JSON di input interroga Crossref per titolo e anno.
+  2. Accetta il primo risultato solo se score >= cutoff e se il match supera
+     la validazione sui metadati (titolo + anno).
+  3. Classifica ogni record come validated, rejected o error.
+  Le query sono eseguite in parallelo (multiprocessing) con una cache condivisa
+  tra i processi.
+
+Funzioni principali:
+  process_item()                          query e validazione di un singolo record
+  crossref_with_metavalidation_pipeline() orchestrazione: pool di processi,
+                                          gestione della cache, salvataggio output
+
+Input:   JSON delle pubblicazioni (formato WhoIsWho/BOND), cutoff (default 35.0)
+Output:  validated_keys_dois.csv (key, doi), rejected_items.csv,
+         error_items.csv, crossref_cache.json
+
+Dipendenze: tqdm, crossref_query_2.py (funzioni di query e validazione)
+"""
+
+
 import json
 import os
 import time

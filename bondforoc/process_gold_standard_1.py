@@ -1,3 +1,30 @@
+"""
+process_gold_standard_1.py — Stage 1: preparazione del gold standard
+
+Verifica su Crossref i DOI del gold standard annotato manualmente e divide il
+dataset in training e validation set.
+
+Funzionamento:
+  1. Legge il CSV del gold standard (delimitatore ';', encoding rilevato con chardet).
+  2. Per ogni record interroga l'endpoint Crossref /works/{doi} e aggiunge la
+     colonna 'ID_on_Crossref' (True / False / "Errore API").
+  3. Mescola i record (seed 42) e li divide: 300 nel training set, i restanti
+     nel validation set.
+
+Funzioni principali:
+  detect_file_encoding()   rileva l'encoding del CSV di input
+  check_doi_on_crossref()  verifica l'esistenza del DOI su Crossref (con retry)
+  split_dataset()          divisione casuale training/validation
+  process_csv()            orchestrazione: lettura, verifica, split, salvataggio
+
+Input:   gold_standard.csv (colonne richieste: DOI, Cinese_title)
+Output:  results/training_set.csv, results/validation_set.csv,
+         results/failed_requests.csv (solo in caso di errori API)
+
+Dipendenze: requests, chardet
+"""
+
+
 import csv
 import requests
 import os

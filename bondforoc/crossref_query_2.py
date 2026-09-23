@@ -1,3 +1,47 @@
+"""
+crossref_query_2.py — Stage 2: calibrazione del cutoff sullo score Crossref
+
+Stima sul training set la soglia ottimale dello score di rilevanza Crossref
+per accettare un match titolo -> DOI, e la valuta sul validation set.
+Espone inoltre le funzioni di query e validazione riusate dallo Stage 3.
+
+Funzionamento:
+  1. Per ogni record del training set interroga Crossref per titolo, filtrando
+     per anno (year..year+1; anno di default 2020 se mancante o non valido),
+     e tiene il primo risultato.
+  2. Confronta il DOI restituito con quello del gold standard e valida il match
+     sui metadati (similarità Levenshtein del titolo > 0.5, anno esatto;
+     controllo autori disabilitato).
+  3. Calcola le metriche su una griglia di cutoff e sceglie quello con accuracy
+     massima (sovrascrivibile con main(manual_cutoff=...)).
+  4. Valuta il cutoff sul validation set e analizza i match errati sopra soglia.
+
+Funzioni principali:
+  main()                          orchestrazione dell'intero processo
+  process_json_and_training()     query sul training set + ricerca del cutoff
+  process_record()                query e validazione di un singolo record
+  create_score_analysis_plot()    scatter plot score/correttezza e cutoff ottimale
+  calculate_metrics_at_cutoff()   accuracy, precision, recall, F1 per un cutoff
+  create_validation_cache()       pre-caching delle query del validation set
+  evaluate_validation_set()       valutazione del cutoff sul validation set (da cache)
+  analyze_wrong_matches()         esportazione dei match errati sopra soglia
+
+Funzioni riusate dallo Stage 3:
+  query_crossref(), query_with_retry(), extract_crossref_score(),
+  extract_crossref_metadata(), validate_crossref_match(), normalize_doi(),
+  load_crossref_cache(), save_crossref_cache()
+
+Input:   data/Bondvalidation.json, results/training_set.csv,
+         results/validation_set.csv
+Output:  results/crossref_score_analysis.png, crossref_cutoff_analysis.csv,
+         validation_results.csv, wrong_matches_analysis.csv,
+         cache delle query (crossref_training_cache.json,
+         crossref_validation_cache.json)
+
+Dipendenze: requests, matplotlib, python-Levenshtein
+"""
+
+
 import csv
 import json
 import time
@@ -5,7 +49,7 @@ import os
 import requests
 import matplotlib.pyplot as plt
 from typing import Dict, List, Optional, Tuple, Union, Any
-import Levenshtein  # You'll need to install python-Levenshtein package
+import Levenshtein  # install python-Levenshtein package
 
 
 def main(manual_cutoff: Optional[float] = None):
