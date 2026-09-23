@@ -91,7 +91,7 @@ def process_item(item_data, cutoff, crossref_cache, cache_lock, cache_file=None,
         # Controlla se abbiamo questo risultato nella cache
         with cache_lock:
             if cache_key in crossref_cache and use_cache:
-                print(f"  Usando risultato dalla cache per '{title}'")
+                print(f"Usando risultato dalla cache per '{title}'")
                 cr_result = crossref_cache[cache_key]
                 cr_doi = cr_result.get("doi")
                 cr_score = cr_result.get("score", 0)
@@ -110,7 +110,7 @@ def process_item(item_data, cutoff, crossref_cache, cache_lock, cache_file=None,
                 cr_score = extract_crossref_score(cr_item)
                 cr_metadata = extract_crossref_metadata(cr_item)
             else:
-                print(f"  Nessun risultato trovato su CrossRef per {key}")
+                print(f"Nessun risultato trovato su CrossRef per {key}")
                 cr_doi = None
                 cr_score = 0
                 cr_metadata = {}

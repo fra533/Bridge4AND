@@ -59,14 +59,14 @@ def check_doi_on_crossref(doi, max_retries=MAX_RETRIES):
                 return False
             else:
                 attempt += 1
-                print(f"⚠️ Tentativo {attempt}/{max_retries} fallito per DOI {doi}. Codice HTTP: {response.status_code}")
+                print(f"Tentativo {attempt}/{max_retries} fallito per DOI {doi}. Codice HTTP: {response.status_code}")
                 time.sleep(RETRY_DELAY)
         except requests.RequestException as e:
             attempt += 1
-            print(f"⚠️ Errore di connessione per DOI {doi} (Tentativo {attempt}/{max_retries}): {e}")
+            print(f"Errore di connessione per DOI {doi} (Tentativo {attempt}/{max_retries}): {e}")
             time.sleep(RETRY_DELAY)
 
-    print(f"❌ Errore definitivo per DOI {doi} dopo {max_retries} tentativi.")
+    print(f"Errore definitivo per DOI {doi} dopo {max_retries} tentativi.")
     return None  # Se tutti i retry falliscono
 
 def split_dataset(rows, training_size=300):
@@ -81,7 +81,7 @@ def process_csv(input_csv_path):
     Legge un CSV, controlla i DOI su Crossref con retry e salva i risultati in 'results'.
     """
     if not os.path.exists(input_csv_path):
-        print(f"❌ Il file {input_csv_path} non esiste.")
+        print(f"Il file {input_csv_path} non esiste.")
         return
 
     # Crea la cartella results se non esiste
@@ -89,7 +89,7 @@ def process_csv(input_csv_path):
 
     # Rileva la codifica del file
     encoding = detect_file_encoding(input_csv_path)
-    print(f"✅ Codifica rilevata per il file: {encoding}")
+    print(f"Codifica rilevata per il file: {encoding}")
 
     try:
         with open(input_csv_path, mode='r', encoding=encoding, errors='replace') as infile:
@@ -97,14 +97,14 @@ def process_csv(input_csv_path):
             
             # Pulisce i nomi delle colonne e ignora quelle vuote
             fieldnames = [field.strip() for field in reader.fieldnames if field.strip()]
-            print("📋 Nomi delle colonne trovate nel file CSV:", fieldnames)
+            print("Nomi delle colonne trovate nel file CSV:", fieldnames)
 
             if 'DOI' not in fieldnames:
-                print("❌ La colonna 'DOI' non è presente nel file CSV.")
+                print("La colonna 'DOI' non è presente nel file CSV.")
                 return
 
             if 'Cinese_title' not in fieldnames:
-                print("❌ La colonna 'Cinese_title' non è presente nel file CSV.")
+                print("La colonna 'Cinese_title' non è presente nel file CSV.")
                 return
 
             # Aggiungi la colonna 'ID_on_Crossref'
@@ -154,13 +154,13 @@ def process_csv(input_csv_path):
                 writer.writerows(failed_requests)
             print(f"⚠️ Sono stati rilevati errori API: salvati in results/failed_requests.csv")
 
-        print(f"✅ Training Set salvato in: results/training_set.csv ({len(training_set)} esempi)")
-        print(f"✅ Validation Set salvato in: results/validation_set.csv ({len(validation_set)} esempi)")
+        print(f"Training Set salvato in: results/training_set.csv ({len(training_set)} esempi)")
+        print(f"Validation Set salvato in: results/validation_set.csv ({len(validation_set)} esempi)")
 
     except UnicodeDecodeError as e:
-        print(f"❌ Errore di decodifica del file CSV: {e}")
+        print(f"Errore di decodifica del file CSV: {e}")
     except Exception as e:
-        print(f"❌ Errore imprevisto durante l'elaborazione del file: {e}")
+        print(f"Errore imprevisto durante l'elaborazione del file: {e}")
 
 if __name__ == "__main__":
     input_csv = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Documents\my_projects\BONDperOC\data\gold_standard.csv"
