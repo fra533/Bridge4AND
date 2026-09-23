@@ -1281,6 +1281,7 @@ def save_crossref_cache(cache: Dict, filename: str) -> None:
     """Salva i risultati delle query Crossref in un file JSON."""
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, indent=4)
+    
 
 def print_summary(best_cutoff: float, cached_metrics: Dict) -> None:
     """Stampa un riepilogo dei risultati della validazione."""
