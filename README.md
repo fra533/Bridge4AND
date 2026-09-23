@@ -16,11 +16,11 @@ flowchart LR
     IN(["gold_standard.csv"]):::fileNode --> S1
 
     %% Riga Superiore: Stage 1 -> Stage 2 -> Stage 3
-    S1["<b>Stage 1: Gold Standard Prep</b><br/><i>process_gold_standard_1.py</i><br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries &amp; title checks<br/>• Stratified Train/Valid split"]:::s1
+    S1["<b>Stage 1: Gold Standard Prep</b><br/><i>step1_prepare_gold_standard.py</i><br/>• Manual DOI verification (N=500)<br/>• AMiner portal queries &amp; title checks<br/>• Stratified Train/Valid split"]:::s1
 
-    S2["<b>Stage 2: Cutoff Calibration</b><br/><i>crossref_query_2.py</i><br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Phi_valid)"]:::s2
+    S2["<b>Stage 2: Cutoff Calibration</b><br/><i>step2_calibrate_crossref_cutoff.py</i><br/>• Crossref BM25 score grid search<br/>• Accuracy optimization criterion<br/>• Year agreement check (Phi_valid)"]:::s2
 
-    S3["<b>Stage 3: Large-Scale Validation</b><br/><i>crossref_query_for_Bond_3.py</i><br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ tau_op &amp; Phi_valid"]:::s3
+    S3["<b>Stage 3: Large-Scale Validation</b><br/><i>step3_validate_crossref_dois.py</i><br/>• Full benchmark DOI resolution<br/>• Multiprocessing Crossref queries<br/>• Filtering: S_cr ≥ tau_op &amp; Phi_valid"]:::s3
 
     S1 -->|"valid_set.csv<br/>train_set.csv"| S2
     S2 -->|"<b>Calibrated Cutoff</b><br/>tau_op = 35.00"| S3
@@ -29,9 +29,9 @@ flowchart LR
     S3 -->|"validated_keys_dois.csv"| S4
 
     %% Riga Inferiore: Stage 4 -> Stage 5 -> Output
-    S4["<b>Stage 4: OpenCitations Enrichment</b><br/><i>opencitations_query_4.py</i><br/>• OpenCitations META API: metadata<br/>• OpenCitations INDEX API: citations<br/>• Local JSON caching"]:::s4
+    S4["<b>Stage 4: OpenCitations Enrichment</b><br/><i>step4_enrich_opencitations.py</i><br/>• OpenCitations META API: metadata<br/>• OpenCitations INDEX API: citations<br/>• Local JSON caching"]:::s4
 
-    S5["<b>Stage 5: Author-Centric Transform</b><br/><i>sna_raw_creation.py</i><br/>• Author name normalization<br/>• Mapping paper IDs to authors<br/>• Preserving ground-truth clusters"]:::s5
+    S5["<b>Stage 5: Author-Centric Transform</b><br/><i>step5_build_author_centric.py</i><br/>• Author name normalization<br/>• Mapping paper IDs to authors<br/>• Preserving ground-truth clusters"]:::s5
 
     OUT["<b>OC-AND Benchmark:</b><br/>converted_metadata_raw.json<br/><i>(Author-Centric Dataset)</i>"]:::fileNode
 
@@ -60,21 +60,21 @@ Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibl
 ```
 Gold Standard CSV
       ↓
-[process_gold_standard_1.py]
+[step1_prepare_gold_standard.py]
       ↓
 Training/Validation Sets
       ↓
-[crossref_query_2.py] → Analisi e ottimizzazione cutoff
+[step2_calibrate_crossref_cutoff.py] → Analisi e ottimizzazione cutoff
       ↓
-[crossref_query_for_Bond_3.py] → Validazione massiva
+[step3_validate_crossref_dois.py] → Validazione massiva
       ↓
 validated_keys_dois.csv
       ↓
-[opencitations_query_4.py] → Metadati + Citazioni
+[step4_enrich_opencitations.py] → Metadati + Citazioni
       ↓
 converted_metadata.json
       ↓
-[sna_raw_creation.py] → Formato autore-centrico
+[step5_build_author_centric.py] → Formato autore-centrico
       ↓
 converted_metadata_raw.json
 ```
@@ -86,27 +86,27 @@ converted_metadata_raw.json
 
 #### Step 1: Prepara Gold Standard
 ```bash
-python process_gold_standard_1.py
+python step1_prepare_gold_standard.py
 ```
 ✅ Controlla `results/training_set.csv` e `results/validation_set.csv`
 
 #### Step 2: Trova Cutoff Ottimale
 ```bash
-python crossref_query_2.py
+python step2_calibrate_crossref_cutoff.py
 ```
 ✅ Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
 
 #### Step 3: Valida Dataset Completo
 ```bash
-# Aggiorna il cutoff in crossref_query_for_Bond_3.py
+# Aggiorna il cutoff in step3_validate_crossref_dois.py
 # Poi esegui:
-python crossref_query_for_Bond_3.py
+python step3_validate_crossref_dois.py
 ```
 ✅ Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
 
 #### Step 4: Recupera Metadati OpenCitations
 ```bash
-python opencitations_query_4.py
+python step4_enrich_opencitations.py
 
 # Seleziona modalità:
 # 1 = Solo metadati
@@ -116,7 +116,7 @@ python opencitations_query_4.py
 
 #### Step 5: Crea Formato Autore-Centrico
 ```bash
-python sna_raw_creation.py
+python step5_build_author_centric.py
 ```
 ✅ Controlla `results/converted_metadata_raw.json`
 
@@ -174,7 +174,7 @@ pip install tqdm
 
 ## 🔧 Struttura della Pipeline
 
-### 1. `process_gold_standard_1.py`
+### 1. `step1_prepare_gold_standard.py`
 
 **Scopo**: Prepara il gold standard verificando i DOI su Crossref e dividendo in training/validation.
 
@@ -195,12 +195,12 @@ training_size = 300      # Dimensione training set
 
 **Esecuzione**:
 ```bash
-python process_gold_standard_1.py
+python step1_prepare_gold_standard.py
 ```
 
 ---
 
-### 2. `crossref_query_2.py`
+### 2. `step2_calibrate_crossref_cutoff.py`
 
 **Scopo**: Analizza il training set per trovare il cutoff ottimale di Crossref score.
 
@@ -225,7 +225,7 @@ python process_gold_standard_1.py
 **Esecuzione**:
 ```bash
 # Con cutoff automatico
-python crossref_query_2.py
+python step2_calibrate_crossref_cutoff.py
 
 # Con cutoff manuale
 # Modifica nel file: main(manual_cutoff=35.0)
@@ -239,7 +239,7 @@ python crossref_query_2.py
 
 ---
 
-### 3. `crossref_query_for_Bond_3.py`
+### 3. `step3_validate_crossref_dois.py`
 
 **Scopo**: Validazione massiva del dataset completo con multiprocessing.
 
@@ -267,12 +267,12 @@ use_cache = True          # Usa cache
 
 **Esecuzione**:
 ```bash
-python crossref_query_for_Bond_3.py
+python step3_validate_crossref_dois.py
 ```
 
 ---
 
-### 4. `opencitations_query_4.py` 
+### 4. `step4_enrich_opencitations.py` 
 
 **Scopo**: Recupera metadati bibliografici e citazioni da OpenCitations (API v2).
 
@@ -326,7 +326,7 @@ python crossref_query_for_Bond_3.py
 
 **Esecuzione**:
 ```bash
-python opencitations_query_4.py
+python step4_enrich_opencitations.py
 
 ```
 
@@ -347,7 +347,7 @@ INDEX API:  https://api.opencitations.net/index/v2/citations/doi:{DOI}
 
 ---
 
-### 5. `sna_raw_creation.py`
+### 5. `step5_build_author_centric.py`
 
 **Scopo**: Converte metadati da formato paper-centrico a formato autore-centrico.
 
@@ -374,7 +374,7 @@ INDEX API:  https://api.opencitations.net/index/v2/citations/doi:{DOI}
 
 **Esecuzione**:
 ```bash
-python sna_raw_creation.py
+python step5_build_author_centric.py
 ```
 
 ---
@@ -419,7 +419,7 @@ La validazione richiede:
 L'API restituisce HTML invece di JSON quando il DOI non esiste nel database. Il sistema marca automaticamente questi DOI come "non trovati".
 
 #### Rate Limiting (HTTP 429)
-Il sistema attende automaticamente quando viene raggiunto il rate limit. Se il problema persiste, aumentare `RATE_LIMIT_DELAY` in `opencitations_query_4.py`.
+Il sistema attende automaticamente quando viene raggiunto il rate limit. Se il problema persiste, aumentare `RATE_LIMIT_DELAY` in `step4_enrich_opencitations.py`.
 
 #### Token OpenCitations non valido
 Richiedere un nuovo token gratuito su https://opencitations.net/accesstoken
