@@ -1,4 +1,4 @@
-data/ 
+data_owner/ 
 gold_crossref_response.csv
 results.json
 bondforoc/failed_responses.json

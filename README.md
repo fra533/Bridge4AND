@@ -157,7 +157,6 @@ results/
 
 ### Software
 - Python 3.8+
-- Connessione internet stabile
 
 ### Librerie Python
 ```bash
