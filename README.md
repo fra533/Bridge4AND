@@ -39,6 +39,8 @@ flowchart LR
     S5 --> OUT
 ```
 
+### INFO ARTICOLO
+
 ## 📋 Indice
 
 - [Panoramica](#-panoramica)
