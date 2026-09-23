@@ -1,3 +1,28 @@
+"""
+add_cit_to_json.py
+
+Arricchisce un JSON di metadati bibliografici (formato WhoIsWho, dizionario
+key -> paper) con identificativi e dati citazionali da OpenCitations.
+
+Funzionamento:
+  1. Carica da CSV la mappatura key -> {doi, omid} (colonne: key, doi, omid).
+  2. Per ogni paper del JSON presente nella mappatura aggiunge i campi 'doi' e 'omid'.
+  3. Se ONLY_ADD_IDS = False, interroga l'OpenCitations Index API v2 e aggiunge:
+       - outgoing_citations / outgoing_citations_count  (endpoint /references)
+       - incoming_citations / incoming_citations_count  (endpoint /citations)
+  4. Salva nel JSON di output solo i paper presenti nella mappatura.
+
+Input:   INPUT_JSON (metadati), CSV_MAPPING (key, doi, omid)
+Output:  OUTPUT_JSON (metadati arricchiti)
+File ausiliari: citations_cache.json (cache delle risposte API),
+                process_metadata.log (log di esecuzione)
+
+Note: DOI normalizzati (minuscolo, senza prefissi); gestione rate limit con
+ritardo fisso, retry ed exponential backoff sugli errori 429; cache salvata
+ogni CACHE_SAVE_INTERVAL paper. Richiede conferma interattiva prima dell'avvio.
+
+"""
+
 import requests
 import json
 import logging
