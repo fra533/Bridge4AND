@@ -7,6 +7,7 @@ Filtra per ISSN multipli
 Include pubblicazioni con almeno un autore con ORCID
 Mantiene SOLO gli autori con ORCID (esclude autori senza ORCID)
 CON SISTEMA DI CHECKPOINT PER RIPRESA AUTOMATICA
+
 """
 
 import os
