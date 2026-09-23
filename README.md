@@ -42,13 +42,13 @@ flowchart LR
 
 ## 📋 Indice
 
-- [Panoramica](#panoramica)
-- [Guida all'Uso](#guida-alluso)
-- [Requisiti](#requisiti)
-- [Struttura della Pipeline](#struttura-della-pipeline)
-- [File di Output](#file-di-output)
-- [Statistiche Attese](#statistiche-attese)
-- [Note Tecniche](#note-tecniche)
+- [Panoramica](#-panoramica)
+- [Rapida guida all'uso](#-guida-alluso)
+- [Requisiti](#-requisiti)
+- [Struttura della pipeline](#-struttura-della-pipeline)
+- [File di Output](#-file-di-output)
+- [Statistiche Attese](#-statistiche-attese)
+- [Note Tecniche](#-note-tecniche)
 
 ---
 
