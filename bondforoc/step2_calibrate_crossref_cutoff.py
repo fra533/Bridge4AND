@@ -1,5 +1,5 @@
 """
-crossref_query_2.py — Stage 2: calibrazione del cutoff sullo score Crossref
+step2_calibrate_crossref_cutoff.py — Stage 2: calibrazione del cutoff sullo score Crossref
 
 Stima sul training set la soglia ottimale dello score di rilevanza Crossref
 per accettare un match titolo -> DOI, e la valuta sul validation set.

@@ -1,5 +1,5 @@
 """
-process_gold_standard_1.py — Stage 1: preparazione del gold standard
+step1_prepare_gold_standard.py — Stage 1: preparazione del gold standard
 
 Verifica su Crossref i DOI del gold standard annotato manualmente e divide il
 dataset in training e validation set.

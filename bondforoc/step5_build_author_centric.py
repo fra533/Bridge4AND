@@ -1,4 +1,6 @@
 '''
+step5_build_author_centric.py
+
 Questo modulo gestisce la conversione di metadati bibliografici da un formato 
 orientato alle pubblicazioni (sna_valid_pub) a un formato orientato agli autori 
 (sna_valid_raw). Il sistema normalizza i nomi degli autori per garantire coerenza 

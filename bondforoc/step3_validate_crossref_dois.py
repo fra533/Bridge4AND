@@ -1,5 +1,5 @@
 """
-crossref_query_for_Bond_3.py — Stage 3: validazione Crossref su larga scala
+step3_validate_crossref_dois.py — Stage 3: validazione Crossref su larga scala
 
 Applica il cutoff calibrato nello Stage 2 all'intero benchmark per assegnare un
 DOI a ogni pubblicazione.

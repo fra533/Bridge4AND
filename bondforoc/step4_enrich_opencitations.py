@@ -1,5 +1,5 @@
 """
-opencitations_query_4.py — Stage 4: arricchimento con OpenCitations
+step4_enrich_opencitations.py — Stage 4: arricchimento con OpenCitations
 
 Recupera da OpenCitations i metadati delle pubblicazioni validate nello Stage 3
 e, opzionalmente, le citazioni, convertendo il risultato nel formato
