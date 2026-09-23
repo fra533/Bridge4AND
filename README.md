@@ -88,13 +88,13 @@ converted_metadata_raw.json
 ```bash
 python process_gold_standard_1.py
 ```
-✅ Verifica: Controlla `results/training_set.csv` e `results/validation_set.csv`
+✅ Controlla `results/training_set.csv` e `results/validation_set.csv`
 
 #### Step 2: Trova Cutoff Ottimale
 ```bash
 python crossref_query_2.py
 ```
-✅ Verifica: Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
+✅ Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
 
 #### Step 3: Valida Dataset Completo
 ```bash
@@ -102,23 +102,23 @@ python crossref_query_2.py
 # Poi esegui:
 python crossref_query_for_Bond_3.py
 ```
-✅ Verifica: Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
+✅ Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
 
 #### Step 4: Recupera Metadati OpenCitations
 ```bash
 python opencitations_query_4.py
 
 # Seleziona modalità:
-# 1 = Solo metadati (veloce)
-# 2 = Metadati + citazioni (completo ma lento)
+# 1 = Solo metadati
+# 2 = Metadati + citazioni (lento)
 ```
-✅ Verifica: Controlla `results/OC_results/converted_metadata.json`
+✅ Controlla `results/OC_results/converted_metadata.json`
 
 #### Step 5: Crea Formato Autore-Centrico
 ```bash
 python sna_raw_creation.py
 ```
-✅ Verifica: Controlla `results/converted_metadata_raw.json`
+✅ Controlla `results/converted_metadata_raw.json`
 
 ---
 
@@ -218,10 +218,10 @@ python process_gold_standard_1.py
 - `results/wrong_matches_analysis.csv` - Analisi errori
 
 **Caratteristiche**:
-- ✅ Sistema di caching intelligente
-- ✅ Validazione con Levenshtein distance (similarità titoli)
-- ✅ Verifica esatta dell'anno
-- ✅ Calcolo automatico del cutoff ottimale
+-  Sistema di caching intelligente
+-  Validazione con Levenshtein distance (similarità titoli)
+-  Verifica esatta dell'anno
+-  Calcolo automatico del cutoff ottimale
 
 **Esecuzione**:
 ```bash
@@ -262,21 +262,18 @@ use_cache = True          # Usa cache
 ```
 
 **Caratteristiche**:
-- 🚀 Multiprocessing per velocizzare l'elaborazione
-- 🔄 Progress bar con `tqdm`
-- 💾 Cache condivisa tra processi
-- ✅ Validazione metadati (titolo + anno)
+- Multiprocessing per velocizzare l'elaborazione
+- Cache condivisa tra processi
+- Validazione metadati (titolo + anno)
 
 **Esecuzione**:
 ```bash
 python crossref_query_for_Bond_3.py
 ```
 
-**Stima Tempi**: ~30 secondi per 100 paper (con 4 processi)
-
 ---
 
-### 4. `opencitations_query_4.py` ⭐ **NUOVO**
+### 4. `opencitations_query_4.py` 
 
 **Scopo**: Recupera metadati bibliografici e citazioni da OpenCitations (API v2).
 
@@ -321,21 +318,17 @@ python crossref_query_for_Bond_3.py
 ```
 
 **Caratteristiche**:
-- 🆕 API OpenCitations v2 (META + INDEX)
-- 🔀 Due modalità di esecuzione
-- 🧪 Fase test con primi 100 DOI
-- 🔄 Sistema retry intelligente
-- 💾 Caching avanzato
-- ⚡ Gestione rate limiting
-- 📊 Statistiche dettagliate
+- API OpenCitations v2 (META + INDEX)
+- Due modalità di esecuzione
+- Fase test con primi 100 DOI
+- Caching 
+- Gestione rate limiting
+- Statistiche dettagliate
 
 **Esecuzione**:
 ```bash
 python opencitations_query_4.py
 
-# Selezione modalità interattiva:
-# 1. Solo metadati
-# 2. Metadati + citazioni (3x più lento)
 ```
 
 **Fasi di Esecuzione**:
@@ -345,11 +338,8 @@ python opencitations_query_4.py
 4. **Elaborazione completa** - Processa tutti i DOI (opzionale)
 5. **Retry** - Riprova DOI falliti nelle esecuzioni successive
 
-**Stima Tempi**:
-- Modalità Standard: ~1 minuto per 100 DOI
-- Modalità Citazioni: ~3 minuti per 100 DOI
 
-**API Endpoint Utilizzati**:
+**API Endpoint Utilizzati e proprietà**:
 ```
 META API:   https://api.opencitations.net/meta/v1/metadata/doi:{DOI}
 INDEX API:  https://api.opencitations.net/index/v2/citations/doi:{DOI}
@@ -435,25 +425,6 @@ Cancellare i file `*cache.json` e rieseguire gli script per rigenerare la cache.
 
 ---
 
-**Versione**: 2.0  
-**Ultimo Aggiornamento**: Ottobre 2025 Normalizzazione DOI
-I DOI vengono normalizzati rimuovendo:
-- Prefissi: `https://doi.org/`, `http://doi.org/`, `doi.org/`, `DOI:`, `doi:`
-- Convertiti in lowercase
-- Spazi rimossi
+**Versione**: 
+**Ultimo Aggiornamento**: 
 
-### Validazione Metadati
-La validazione richiede:
-- **Titolo**: Similarità Levenshtein > 50%
-- **Anno**: Match esatto
-- **Autori**: Check disabilitato di default (opzionale)
-
-### Cache Behavior
-- Cache salvata ogni 100 richieste
-- Backup automatico se corrotta
-- Condivisa tra processi (multiprocessing)
-
----
-
-**Versione**: 2.0  
-**Ultimo Aggiornamento**: Ottobre 2025
