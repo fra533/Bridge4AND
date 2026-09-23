@@ -8,3 +8,4 @@ scientometrics_complete_metadata.json
 scientometrics_complete.json
 diagnostic_venue.py
 test.py
+tests/
