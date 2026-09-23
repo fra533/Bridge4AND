@@ -1,4 +1,4 @@
-# BondforOC Pipeline
+## OC-AND: A Citation-Enriched Benchmark for Author Name Disambiguation
 
 Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibliografici utilizzando Crossref e OpenCitations.
 
@@ -47,18 +47,12 @@ flowchart LR
 - [Requisiti](#-requisiti)
 - [Struttura della pipeline](#-struttura-della-pipeline)
 - [File di Output](#-file-di-output)
-- [Statistiche Attese](#-statistiche-attese)
 - [Note Tecniche](#-note-tecniche)
 
 ---
 
 ## 🎯 Panoramica
-
-Questa pipeline processa dataset bibliografici attraverso tre fasi principali:
-
-1. **Preparazione Gold Standard** - Verifica e divisione del dataset in training/validation
-2. **Validazione Crossref** - Matching dei paper con Crossref e estrazione DOI
-3. **Arricchimento OpenCitations** - Recupero metadati e citazioni da OpenCitations
+Author Name Disambiguation benchmarks are predominantly derived from closed infrastructures that may not reflect conditions in open bibliographic environments. We present OC-AND, an open citation-enriched benchmark for AND constructed by remapping the WhoIsWho dataset with bibliographic and citation metadata from OpenCitations. The dataset is produced through a reproducible five-stage pipeline involving DOI verification, metadata validation, OpenCitations enrichment, and author-centric transformation. OC-AND preserves the original ground-truth author identities and partition structure of WhoIsWho while introducing realistic characteristics of open citation environments: heterogeneous metadata completeness, absent abstracts and affiliations, asymmetric citation coverage, and sparse graph connectivity. The dataset contains author records with associated citations, enabling evaluation of AND methods in settings closer to real-world open scholarly infrastructure scenarios. OC-AND is released as open data with complete provenance documentation and pipeline code, supporting reproducible research and the development of citation-aware disambiguation approaches. The entire pipeline used to create OC-AND is here available for reproducibility. 
 
 ### Flusso Completo
 
@@ -405,22 +399,6 @@ data/
 ```
 
 
----
-
-## 📊 Statistiche Attese
-
-### Crossref Validation
-- **Precision**: 95-98%
-- **Recall**: 85-90%
-- **Coverage**: ~90% dei DOI validabili
-
-### OpenCitations
-- **Coverage**: ~40-60% dei DOI (varia per disciplina)
-- **Citazioni**: Media 10-50 citazioni per paper
-- **Successo Rate**: ~70-80% dei DOI cercati
-
----
-
 ## 📝 Note Tecniche
 
 ### Normalizzazione DOI
@@ -431,7 +409,7 @@ I DOI vengono normalizzati rimuovendo:
 
 ### Validazione Metadati
 La validazione richiede:
-- **Titolo**: Similarità Levenshtein > 50%
+- **Titolo**: Similarità Levenshtein > 50% (opzionale)
 - **Anno**: Match esatto
 - **Autori**: Check disabilitato di default (opzionale)
 
