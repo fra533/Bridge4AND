@@ -386,6 +386,11 @@ Posiziona i tuoi file in:
 data/
   ├── gold_standard.csv
   └── Bondvalidation.json
+bondforoc/
+  ├──
+  ├──
+  ├── 
+  └──
 ```
 
 
