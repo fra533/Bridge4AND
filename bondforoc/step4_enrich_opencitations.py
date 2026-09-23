@@ -3,7 +3,7 @@ step4_enrich_opencitations.py — Stage 4: arricchimento con OpenCitations
 
 Recupera da OpenCitations i metadati delle pubblicazioni validate nello Stage 3
 e, opzionalmente, le citazioni, convertendo il risultato nel formato
-paper-centrico usato da BOND.
+paper-centrico usato da WhoIsWho.
 
 Funzionamento:
   1. Selezione interattiva della modalità: solo metadati, oppure metadati +
@@ -307,10 +307,8 @@ def parse_authors(author_string: str) -> List[Dict[str, str]]:
         return []
     
     authors = []
-    # Dividi per punto e virgola per separare gli autori
     author_parts = author_string.split(';')
     
-    # Parole che indicano inizio di affiliazioni (la META API non dovrebbe averle, ma per sicurezza)
     affiliation_indicators = {
         'department', 'university', 'college', 'institute', 'laboratory', 
         'school', 'center', 'centre', 'hospital', 'faculty', 'division'
@@ -321,37 +319,29 @@ def parse_authors(author_string: str) -> List[Dict[str, str]]:
         if not author_part:
             continue
         
-        # Rimuovi ORCID e OMID PRIMA di qualsiasi altra elaborazione
-        # Formato: [orcid:0000-0002-2030-3813 omid:ra/0615011235018]
+        # Rimuovi ORCID e OMID 
         author_part = re.sub(r'\[orcid:[^\]]+\]', '', author_part)
         author_part = re.sub(r'\[omid:[^\]]+\]', '', author_part)
         author_part = re.sub(r'\[[^\]]*orcid[^\]]*\]', '', author_part)
         author_part = re.sub(r'\[[^\]]*omid[^\]]*\]', '', author_part)
         
-        # Pulisci spazi multipli
         author_part = re.sub(r'\s+', ' ', author_part).strip()
         
-        # Rimuovi virgole finali
         author_part = author_part.rstrip(',').strip()
         
         if not author_part:
             continue
         
-        # SKIP: Se questa parte contiene indicatori di affiliazione
         author_lower = author_part.lower()
         if any(indicator in author_lower for indicator in affiliation_indicators):
             continue
         
-        # SKIP: Se contiene numeri lunghi (dopo aver rimosso ORCID/OMID)
         if re.search(r'\d{4,}', author_part):
             continue
             
-        # SKIP: Se è troppo lungo per essere un nome
         if len(author_part) > 50:
             continue
         
-        # Parsing del nome
-        # La META API usa il formato "Cognome, Nome"
         if ',' in author_part:
             parts = author_part.split(',', 1)
             if len(parts) == 2:
@@ -1008,7 +998,7 @@ if __name__ == '__main__':
         main()
         print("\nProgramma terminato.")
     except Exception as e:
-        print(f"\n!!! ERRORE CRITICO !!!")
+        print(f"\n!!! ERRORE !!!")
         print(f"Tipo: {type(e).__name__}")
         print(f"Messaggio: {e}")
         import traceback
