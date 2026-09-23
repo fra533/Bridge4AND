@@ -101,28 +101,23 @@ def load_and_convert(input_file_path, output_file_path=r"C:\Users\franc\OneDrive
         output_file_path (str): Percorso dove salvare sna_valid_raw.json (default: results/converted_metadata_raw.json)
     """
     try:
-        # Crea la cartella results se non esiste
         import os
         os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
         
-        # Carica il file sna_valid_pub
         with open(input_file_path, 'r', encoding='utf-8') as f:
             sna_valid_pub = json.load(f)
         
         print(f"Caricato file con {len(sna_valid_pub)} pubblicazioni")
         
-        # Costruisce sna_valid_raw
         sna_valid_raw = build_sna_valid_raw(sna_valid_pub)
         
         print(f"Trovati {len(sna_valid_raw)} autori unici")
         
-        # Salva il risultato
         with open(output_file_path, 'w', encoding='utf-8') as f:
             json.dump(sna_valid_raw, f, indent=2, ensure_ascii=False)
         
         print(f"File sna_valid_raw salvato in: {output_file_path}")
         
-        # Mostra alcune statistiche
         total_publications = sum(len(pubs) for pubs in sna_valid_raw.values())
         avg_pubs_per_author = total_publications / len(sna_valid_raw) if sna_valid_raw else 0
         
@@ -199,5 +194,5 @@ if __name__ == "__main__":
         print(f"  {author}: {publications}")
     
     
-    print("\n=== Conversione del file reale ===")
+    print("\n=== Conversione del file ===")
     load_and_convert(r'C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\OC_train_results_with_citations\converted_metadata.json')

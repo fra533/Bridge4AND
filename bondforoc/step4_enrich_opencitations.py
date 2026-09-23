@@ -56,12 +56,10 @@ OPENCITATION_CITATIONS_URL = "https://api.opencitations.net/index/v2/citations/"
 OPENCITATION_REFERENCES_URL = "https://api.opencitations.net/index/v2/references/"
 INPUT_FILENAME = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\Bond_test_crossref_validated\validated_keys_dois.csv"
 
-# Cartelle di output
 BASE_OUTPUT_DIR = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results"
 OUTPUT_DIR_STANDARD = os.path.join(BASE_OUTPUT_DIR, "OC_results")
 OUTPUT_DIR_WITH_CITATIONS = os.path.join(BASE_OUTPUT_DIR, "OC_test_results_with_citations")
 
-# Variabile globale per la modalità corrente
 INCLUDE_CITATIONS = False
 OUTPUT_DIR = OUTPUT_DIR_STANDARD
 

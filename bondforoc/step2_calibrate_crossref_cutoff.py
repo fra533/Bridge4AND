@@ -78,7 +78,6 @@ def main(manual_cutoff: Optional[float] = None):
             input_json, 
             training_csv, 
             output_plot, 
-            #max_keys=50,  # Limita per test, rimuovi o aumenta per l'analisi completa
             results_dir=results_dir,
             crossref_cache_file=training_cache_file,
             use_cache=use_cache
@@ -130,7 +129,7 @@ def main(manual_cutoff: Optional[float] = None):
 def get_info_from_json(input_json: Dict, key: str, title: str) -> Tuple[int, str, Dict]:
     """
     Extract year, updated title, and complete metadata from JSON file.
-    Now returns the full json_item for validation purposes.
+    Returns the full json_item for validation purposes.
     """
     year = 2020  # Default year
     updated_title = title  # CSV title
@@ -606,7 +605,6 @@ def evaluate_validation_set(
         "false_negatives_with_validation": 0
     }
     
-    # Debug counter
     debug_counter = 0
     
     for row in validation_data:
@@ -617,7 +615,6 @@ def evaluate_validation_set(
         
         year, updated_title, json_item = get_info_from_json(input_json, key, title)
         
-        # Debug logging for first 5 records
         if debug_counter < 5:
             print(f"\nDEBUG RECORD {debug_counter}:")
             print(f"  Key: {key}")
@@ -1094,7 +1091,6 @@ def query_crossref(title: str, year: Optional[Union[int, str]]) -> Dict:
             "rows": 1
         }
     else:
-        # Assicurati che l'anno sia un intero
         try:
             year_int = int(year)
             params = {
@@ -1103,7 +1099,6 @@ def query_crossref(title: str, year: Optional[Union[int, str]]) -> Dict:
                 "rows": 1
             }
         except (ValueError, TypeError):
-            # Se la conversione a intero fallisce, usa il default
             default_year = 2020
             print(f"NOTA: Impossibile convertire anno '{year}' a intero, usando {default_year} per titolo '{title}'")
             params = {
@@ -1185,7 +1180,6 @@ def validate_crossref_match(json_item: Dict, cr_metadata: Dict, cr_year: Optiona
         "debug_info": {}  # Added for debugging
     }
     
-    # Check if we have minimum required data
     if not json_item or not cr_metadata:
         validation_details["debug_info"]["error"] = "Missing json_item or cr_metadata"
         return False, validation_details

@@ -32,7 +32,7 @@ import chardet
 import random
 import time
 
-random.seed(42)  # Per riproducibilità dei risultati
+random.seed(42)  
 
 MAX_RETRIES = 3  # Numero massimo di tentativi per ogni richiesta
 RETRY_DELAY = 5  # Secondi di attesa tra i retry
@@ -95,7 +95,6 @@ def process_csv(input_csv_path):
         with open(input_csv_path, mode='r', encoding=encoding, errors='replace') as infile:
             reader = csv.DictReader(infile, delimiter=';')
             
-            # Pulisce i nomi delle colonne e ignora quelle vuote
             fieldnames = [field.strip() for field in reader.fieldnames if field.strip()]
             print("Nomi delle colonne trovate nel file CSV:", fieldnames)
 
@@ -107,7 +106,6 @@ def process_csv(input_csv_path):
                 print("La colonna 'Cinese_title' non è presente nel file CSV.")
                 return
 
-            # Aggiungi la colonna 'ID_on_Crossref'
             fieldnames.append('ID_on_Crossref')
 
             rows = []
@@ -132,10 +130,8 @@ def process_csv(input_csv_path):
 
                 rows.append(row)
 
-        # Divisione in training e validation set
         training_set, validation_set = split_dataset(rows)
 
-        # Salvataggio dei risultati
         with open("results/training_set.csv", mode='w', encoding='utf-8', newline='') as train_file:
             writer = csv.DictWriter(train_file, fieldnames=fieldnames)
             writer.writeheader()
@@ -146,7 +142,6 @@ def process_csv(input_csv_path):
             writer.writeheader()
             writer.writerows(validation_set)
 
-        # Salvataggio dei fallimenti
         if failed_requests:
             with open("results/failed_requests.csv", mode='w', encoding='utf-8', newline='') as failed_file:
                 writer = csv.DictWriter(failed_file, fieldnames=fieldnames)

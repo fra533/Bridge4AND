@@ -193,14 +193,12 @@ def crossref_with_metavalidation_pipeline(
         use_cache: Whether to use cache for CrossRef queries
         cache_file: File to store CrossRef cache
     """
-    # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
     output_path = os.path.join(output_dir, output_file)
     rejected_path = os.path.join(output_dir, "rejected_items.csv")
     error_path = os.path.join(output_dir, "error_items.csv")
     
-    # Imposta il file di cache se non specificato
     if cache_file is None and use_cache:
         cache_file = os.path.join(output_dir, "crossref_cache.json")
     
@@ -219,7 +217,6 @@ def crossref_with_metavalidation_pipeline(
     
     print(f"Processing {len(input_json)} items with cutoff {cutoff} using {num_processes} processes...")
     
-    # Prepare items for processing
     items_to_process = list(input_json.items())
     
     # Set up multiprocessing with a shared cache
@@ -227,7 +224,6 @@ def crossref_with_metavalidation_pipeline(
     shared_cache = manager.dict(crossref_cache)
     cache_lock = manager.Lock()
     
-    # Set up multiprocessing
     pool = mp.Pool(processes=num_processes)
     process_func = partial(
         process_item, 
@@ -238,7 +234,6 @@ def crossref_with_metavalidation_pipeline(
         use_cache=use_cache
     )
     
-    # Process items with progress bar
     results = []
     cache_updates = False
     
@@ -251,7 +246,6 @@ def crossref_with_metavalidation_pipeline(
         if result.get("cache_updated", False):
             cache_updates = True
     
-    # Close the pool
     pool.close()
     pool.join()
     
@@ -262,7 +256,6 @@ def crossref_with_metavalidation_pipeline(
             save_crossref_cache(crossref_cache, cache_file)
             print(f"Cache Crossref aggiornata e salvata con {len(crossref_cache)} elementi")
     
-    # Organize results
     validated_items = []
     rejected_items = []
     error_items = []
@@ -281,14 +274,12 @@ def crossref_with_metavalidation_pipeline(
             error_item.update(result["data"])
             error_items.append(error_item)
     
-    # Save validated items
     if validated_items:
         with open(output_path, "w", encoding="utf-8", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=["key", "doi"])
             writer.writeheader()
             writer.writerows(validated_items)
     
-    # Save rejected items
     if rejected_items:
         with open(rejected_path, "w", encoding="utf-8", newline="") as f:
             fieldnames = list(set().union(*(item.keys() for item in rejected_items)))
@@ -296,7 +287,6 @@ def crossref_with_metavalidation_pipeline(
             writer.writeheader()
             writer.writerows(rejected_items)
     
-    # Save error items
     if error_items:
         with open(error_path, "w", encoding="utf-8", newline="") as f:
             fieldnames = list(set().union(*(item.keys() for item in error_items)))
@@ -304,7 +294,6 @@ def crossref_with_metavalidation_pipeline(
             writer.writeheader()
             writer.writerows(error_items)
     
-    # Print statistics
     stats = {
         "total": len(input_json),
         "validated": len(validated_items),
