@@ -102,7 +102,7 @@ python step5_build_author_centric.py
 
 ---
 
-## 📁 File di Output
+## File di Output
 
 ### Struttura Directory Results
 ```
@@ -152,7 +152,7 @@ pip install tqdm
 
 ---
 
-## 🔧 Struttura della Pipeline
+## Struttura della Pipeline
 
 ### 1. `step1_prepare_gold_standard.py`
 
@@ -374,7 +374,7 @@ bondforoc/
 ```
 
 
-## 📝 Note Tecniche
+## Note Tecniche
 
 ### Normalizzazione DOI
 I DOI vengono normalizzati rimuovendo:
