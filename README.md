@@ -8,12 +8,12 @@ Author Name Disambiguation benchmarks are predominantly derived from closed infr
 
 ## Indice
 
-- [Panoramica](-panoramica)
-- [Rapida guida all'uso](-guida-alluso)
-- [Requisiti](-requisiti)
-- [Struttura della pipeline](#-struttura-della-pipeline)
-- [File di Output](#-file-di-output)
-- [Note Tecniche](#-note-tecniche)
+- [Panoramica](#panoramica)
+- [Guida all'Uso](#guida-alluso)
+- [File di Output](#file-di-output)
+- [Requisiti](#requisiti)
+- [Struttura della Pipeline](#struttura-della-pipeline)
+- [Note Tecniche](#note-tecniche)
 
 ---
 
@@ -60,7 +60,7 @@ flowchart LR
 ```
 
 ---
-##  Guida all'Uso
+## Guida all'Uso
 
 ### Workflow Completo
 
@@ -133,7 +133,7 @@ results/
 ```
 ---
 
-##  Requisiti
+## Requisiti
 
 ### Software
 - Python 3.8+
