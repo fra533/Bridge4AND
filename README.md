@@ -12,7 +12,6 @@ Author Name Disambiguation benchmarks are predominantly derived from closed infr
 - [Guida all'Uso](#guida-alluso)
 - [File di Output](#file-di-output)
 - [Requisiti](#requisiti)
-- [Struttura della Pipeline](#struttura-della-pipeline)
 - [Note Tecniche](#note-tecniche)
 
 ---
