@@ -8,9 +8,9 @@ Author Name Disambiguation benchmarks are predominantly derived from closed infr
 
 ## Indice
 
-- [Panoramica](#-panoramica)
-- [Rapida guida all'uso](#-guida-alluso)
-- [Requisiti](#-requisiti)
+- [Panoramica](-panoramica)
+- [Rapida guida all'uso](-guida-alluso)
+- [Requisiti](-requisiti)
 - [Struttura della pipeline](#-struttura-della-pipeline)
 - [File di Output](#-file-di-output)
 - [Note Tecniche](#-note-tecniche)
