@@ -2,6 +2,26 @@
 
 Author Name Disambiguation benchmarks are predominantly derived from closed infrastructures that may not reflect conditions in open bibliographic environments. We present OC-AND, an open citation-enriched benchmark for AND constructed by remapping the WhoIsWho dataset with bibliographic and citation metadata from OpenCitations. The dataset is produced through a reproducible five-stage pipeline involving DOI verification, metadata validation, OpenCitations enrichment, and author-centric transformation. OC-AND preserves the original ground-truth author identities and partition structure of WhoIsWho while introducing realistic characteristics of open citation environments: heterogeneous metadata completeness, absent abstracts and affiliations, asymmetric citation coverage, and sparse graph connectivity. The dataset contains author records with associated citations, enabling evaluation of AND methods in settings closer to real-world open scholarly infrastructure scenarios. OC-AND is released as open data with complete provenance documentation and pipeline code, supporting reproducible research and the development of citation-aware disambiguation approaches. The entire pipeline used to create OC-AND is here available for reproducibility. 
 
+
+### INFO ARTICOLO
+
+
+## Indice
+
+- [Panoramica](#-panoramica)
+- [Rapida guida all'uso](#-guida-alluso)
+- [Requisiti](#-requisiti)
+- [Struttura della pipeline](#-struttura-della-pipeline)
+- [File di Output](#-file-di-output)
+- [Note Tecniche](#-note-tecniche)
+
+---
+
+## Panoramica
+Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibliografici utilizzando Crossref e OpenCitations.
+
+### Flusso Completo
+
 ```mermaid
 flowchart LR
     %% Palette colori coerente con TikZ
@@ -39,48 +59,8 @@ flowchart LR
     S5 --> OUT
 ```
 
-### INFO ARTICOLO
-
-## 📋 Indice
-
-- [Panoramica](#-panoramica)
-- [Rapida guida all'uso](#-guida-alluso)
-- [Requisiti](#-requisiti)
-- [Struttura della pipeline](#-struttura-della-pipeline)
-- [File di Output](#-file-di-output)
-- [Note Tecniche](#-note-tecniche)
-
 ---
-
-## 🎯 Panoramica
-Pipeline completa per l'estrazione, validazione e arricchimento di metadati bibliografici utilizzando Crossref e OpenCitations.
-
-### Flusso Completo
-
-```
-Gold Standard CSV
-      ↓
-[step1_prepare_gold_standard.py]
-      ↓
-Training/Validation Sets
-      ↓
-[step2_calibrate_crossref_cutoff.py] → Analisi e ottimizzazione cutoff
-      ↓
-[step3_validate_crossref_dois.py] → Validazione massiva
-      ↓
-validated_keys_dois.csv
-      ↓
-[step4_enrich_opencitations.py] → Metadati + Citazioni
-      ↓
-converted_metadata.json
-      ↓
-[step5_build_author_centric.py] → Formato autore-centrico
-      ↓
-converted_metadata_raw.json
-```
-
----
-## 🚀 Guida all'Uso
+##  Guida all'Uso
 
 ### Workflow Completo
 
@@ -88,13 +68,13 @@ converted_metadata_raw.json
 ```bash
 python step1_prepare_gold_standard.py
 ```
-✅ Controlla `results/training_set.csv` e `results/validation_set.csv`
+✅ `results/training_set.csv` and `results/validation_set.csv`
 
 #### Step 2: Trova Cutoff Ottimale
 ```bash
 python step2_calibrate_crossref_cutoff.py
 ```
-✅ Guarda `results/crossref_score_analysis.png` per il cutoff suggerito
+✅ `results/crossref_score_analysis.png` for the suggested cutoff
 
 #### Step 3: Valida Dataset Completo
 ```bash
@@ -102,7 +82,7 @@ python step2_calibrate_crossref_cutoff.py
 # Poi esegui:
 python step3_validate_crossref_dois.py
 ```
-✅ Controlla `results/Bond_crossref_validated/validated_keys_dois.csv`
+✅ `results/Bond_crossref_validated/validated_keys_dois.csv`
 
 #### Step 4: Recupera Metadati OpenCitations
 ```bash
@@ -112,13 +92,13 @@ python step4_enrich_opencitations.py
 # 1 = Solo metadati
 # 2 = Metadati + citazioni (lento)
 ```
-✅ Controlla `results/OC_results/converted_metadata.json`
+✅ `results/OC_results/converted_metadata.json`
 
 #### Step 5: Crea Formato Autore-Centrico
 ```bash
 python step5_build_author_centric.py
 ```
-✅ Controlla `results/converted_metadata_raw.json`
+✅ `results/converted_metadata_raw.json`
 
 ---
 
@@ -153,7 +133,7 @@ results/
 ```
 ---
 
-## 💻 Requisiti
+##  Requisiti
 
 ### Software
 - Python 3.8+
