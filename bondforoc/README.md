@@ -153,7 +153,6 @@ python step3_validate_crossref_dois.py
 - Due modalità di esecuzione
 - Fase test con primi 100 DOI
 - Caching 
-- Gestione rate limiting
 - Statistiche dettagliate
 - Le proprietà non valorizzate — come abstract mancanti, affiliazioni inesistenti o nodi di citazione vuoti — vengono sistematicamente mantenute come stringhe vuote (\texttt{""}) o array vuoti (\texttt{[]}) per garantire la coerenza strutturale. Al contrario, poiché OpenCitations Meta non fornisce nativamente parole chiave tematiche, queste vengono generate sinteticamente a partire dal titolo della pubblicazione: previa rimozione delle comuni stop word inglesi, vengono estratti i termini alfabetici salienti con una lunghezza superiore a tre caratteri (fino a un massimo di 15 termini per record), preservando così la compatibilità di schema con le architetture di disambiguazione a valle.
 
