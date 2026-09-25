@@ -1,5 +1,10 @@
 ## Struttura della pipeline
 
+Una limitazione strutturale fondamentale del benchmark WhoIsWho è la totale assenza di identificatori persistenti digitali (DOI). Per superare tale criticità, abbiamo implementato una procedura di verifica manuale sistematica su un campione di $N = 500$ pubblicazioni, estratto dai sottoinsiemi ad elevata ambiguità della partizione di validazione di WhoIsWho.
+
+Per ciascun record, i revisori hanno interrogato direttamente il portale AMiner per gestire traduzioni strutturali o normalizzazioni anglicizzate dei titoli non occidentali. Qualora il DOI non fosse presente su AMiner, sono state eseguite ricerche secondarie sui portali aperti degli editori. I record per i quali non è stato possibile recuperare alcun identificatore persistente verificato sono stati contrassegnati come \texttt{None}. Il set curato risultante ($\mathrm{DOI}_{\mathrm{gold}}$) è stato formalizzato in uno schema tabellare verificabile (\texttt{gold_standard.csv}), impiegato come baseline di calibrazione.
+
+
 ### 1. `step1_prepare_gold_standard.py`
 
 **Scopo**: Prepara il gold standard verificando i DOI su Crossref e dividendo in training/validation.
