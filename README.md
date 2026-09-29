@@ -1,6 +1,6 @@
 # OC-AND: A Citation-Enriched Benchmark for Author Name Disambiguation
 
-Author Name Disambiguation benchmarks are predominantly derived from closed infrastructures that may not reflect conditions in open bibliographic environments. We present OC-AND, an open citation-enriched benchmark for AND constructed by remapping the WhoIsWho dataset with bibliographic and citation metadata from OpenCitations. The dataset is produced through a reproducible five-stage pipeline involving DOI verification, metadata validation, OpenCitations enrichment, and author-centric transformation. OC-AND preserves the original ground-truth author identities and partition structure of WhoIsWho while introducing realistic characteristics of open citation environments: heterogeneous metadata completeness, absent abstracts and affiliations, asymmetric citation coverage, and sparse graph connectivity. The dataset contains author records with associated citations, enabling evaluation of AND methods in settings closer to real-world open scholarly infrastructure scenarios. OC-AND is released as open data with complete provenance documentation and pipeline code, supporting reproducible research and the development of citation-aware disambiguation approaches. The entire pipeline used to create OC-AND is here available for reproducibility. 
+Author Name Disambiguation benchmarks are predominantly derived from closed infrastructures that may not reflect conditions in open bibliographic environments. We present OC-AND, an open citation-enriched benchmark for AND constructed by remapping the WhoIsWho dataset with bibliographic and citation metadata from OpenCitations. The dataset is produced through a reproducible five-stage pipeline involving DOI verification, metadata validation, OpenCitations enrichment, and author-centric transformation. OC-AND retains the WhoIsWho ground-truth files and partition structure unchanged, while its publication files are restricted to publications that could be matched to a validated DOI and an OpenCitations record. It introduces realistic characteristics of open environments: heterogeneous metadata completeness, absent abstracts and affiliations, asymmetric citation coverage, and sparse graph connectivity. The dataset contains author records with associated citations, enabling evaluation of AND methods in settings closer to real-world open scholarly infrastructure scenarios. OC-AND is released as open data with complete provenance documentation and pipeline code, supporting reproducible research and the development of citation-aware disambiguation approaches.
 
 
 ### INFO ARTICOLO
@@ -159,7 +159,7 @@ Posiziona i tuoi file in:
 data/
   ├── gold_standard.csv
   └── Bondvalidation.json
-bondforoc/
+Bridge4AND/
   ├──
   ├──
   ├── 

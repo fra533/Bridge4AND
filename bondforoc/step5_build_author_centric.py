@@ -92,7 +92,7 @@ def build_sna_valid_raw(sna_valid_pub):
     # Converte defaultdict in dict normale
     return dict(author_publications)
 
-def load_and_convert(input_file_path, output_file_path=r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\test_metadataOC_with_citations_raw.json"):
+def load_and_convert(input_file_path, output_file_path=r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\test_sna_valid_raw_OCAND.json"):
     """
     Carica sna_valid_pub da file JSON e salva sna_valid_raw
     
@@ -195,4 +195,4 @@ if __name__ == "__main__":
     
     
     print("\n=== Conversione del file ===")
-    load_and_convert(r'C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\OC_train_results_with_citations\converted_metadata.json')
+    load_and_convert(r'C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\test_sna_valid_pub_OCAND_with_DOI.json')

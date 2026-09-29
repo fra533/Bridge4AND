@@ -36,15 +36,15 @@ from typing import Dict, List, Optional, Tuple
 # ===============================
 # TRUE: Aggiunge solo DOI e OMID dal CSV (modalità silenziosa).
 # FALSE: Aggiunge gli ID e scarica anche le citazioni dalle API.
-ONLY_ADD_IDS = False
+ONLY_ADD_IDS = True
 
 # ===============================
 # CONFIGURAZIONE PERCORSI
 # ===============================
 #INPUT_JSON = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\data\Bondvalidation.json"
-INPUT_JSON = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BOND-OC\WhoIsWho\bond\dataset\data\src\sna-test\sna_test_pub.json"
-CSV_MAPPING = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\Bond_test_crossref_validated\validated_keys_dois.csv"
-OUTPUT_JSON = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\test_metadata_with_ids_and_citations.json"
+INPUT_JSON = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\OC_results_with_citations\converted_metadata_withcit.json"
+CSV_MAPPING = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\Bond_valid_crossref_validated\validated_keys_dois.csv"
+OUTPUT_JSON = r"C:\Users\franc\OneDrive - Alma Mater Studiorum Università di Bologna\Desktop\BondforOC\results\test_sna_valid_pub_OCAND_with_DOI.json"
 
 CACHE_FILENAME = "citations_cache.json"
 LOG_FILENAME = "process_metadata.log"

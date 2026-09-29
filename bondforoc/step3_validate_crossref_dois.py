@@ -21,7 +21,7 @@ Input:   JSON delle pubblicazioni (formato WhoIsWho/BOND), cutoff (default 35.0)
 Output:  validated_keys_dois.csv (key, doi), rejected_items.csv,
          error_items.csv, crossref_cache.json
 
-Dipendenze: tqdm, crossref_query_2.py (funzioni di query e validazione)
+Dipendenze: tqdm, step2_calibrate_crossref_cutoff.py (funzioni di query e validazione)
 """
 
 
