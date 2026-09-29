@@ -1,8 +1,8 @@
 data_owner/ 
 gold_crossref_response.csv
 results.json
-bondforoc/failed_responses.json
-bondforoc/success_responses.json
+Bridge4AND/failed_responses.json
+Bridge4AND/success_responses.json
 results/
 scientometrics_complete_metadata.json
 scientometrics_complete.json
