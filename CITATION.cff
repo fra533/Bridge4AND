@@ -1,0 +1,54 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: OC-AND
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - given-names: Francesca
+    orcid: 'https://orcid.org/0009-0002-7145-2939'
+    family-names: Cappelli
+    email: francesca.cappelli9@unibo.it
+    affiliation: Alma Mater Studiorum - University of Bologna
+  - given-names: 'Giovanni '
+    family-names: Colavizza
+    orcid: 'https://orcid.org/0000-0002-9806-084X'
+    email: giovanni.colavizza@unibo.it
+    affiliation: University of Copenhagen
+  - orcid: 'https://orcid.org/0000-0003-0530-4305'
+    given-names: Silvio
+    family-names: Peroni
+    affiliation: Alma Mater Studiorum - University of Bologna
+    email: silvio.peroni@unibo.it
+repository-code: 'https://github.com/fra533/Bridge4AND.git'
+abstract: >-
+  Author Name Disambiguation benchmarks are predominantly
+  derived from closed infrastructures that may not reflect
+  conditions in open bibliographic environments. We present
+  OC-AND, an open citation-enriched benchmark for AND
+  constructed by remapping the WhoIsWho dataset with
+  bibliographic and citation metadata from OpenCitations.
+  The dataset is produced through a reproducible five-stage
+  pipeline involving DOI verification, metadata validation,
+  OpenCitations enrichment, and author-centric
+  transformation. OC-AND retains the WhoIsWho ground-truth
+  files and partition structure unchanged, while its
+  publication files are restricted to publications that
+  could be matched to a validated DOI and an OpenCitations
+  record. It introduces realistic characteristics of open
+  environments: heterogeneous metadata completeness, absent
+  abstracts and affiliations, asymmetric citation coverage,
+  and sparse graph connectivity. The dataset contains author
+  records with associated citations, enabling evaluation of
+  AND methods in settings closer to real-world open
+  scholarly infrastructure scenarios. OC-AND is released as
+  open data with complete provenance documentation and
+  pipeline code, supporting reproducible research and the
+  development of citation-aware disambiguation approaches.
+keywords:
+  - Author Name Disambiguation
+  - Open Scholarly Metadata
+  - 'Benchmark '
