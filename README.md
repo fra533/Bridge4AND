@@ -5,7 +5,8 @@ Author Name Disambiguation benchmarks are predominantly derived from closed infr
 
 To cite this paper: 
 
-To cite this repository: https://doi.org/10.5281/zenodo.23055586
+To cite this repository: 
+Cappelli, F., Colavizza, G., & Peroni, S. (2026). OC-AND (Version v1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23055587
 
 
 ## Indice
