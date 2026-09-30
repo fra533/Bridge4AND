@@ -3,7 +3,9 @@
 Author Name Disambiguation benchmarks are predominantly derived from closed infrastructures that may not reflect conditions in open bibliographic environments. We present OC-AND, an open citation-enriched benchmark for AND constructed by remapping the WhoIsWho dataset with bibliographic and citation metadata from OpenCitations. The dataset is produced through a reproducible five-stage pipeline involving DOI verification, metadata validation, OpenCitations enrichment, and author-centric transformation. OC-AND retains the WhoIsWho ground-truth files and partition structure unchanged, while its publication files are restricted to publications that could be matched to a validated DOI and an OpenCitations record. It introduces realistic characteristics of open environments: heterogeneous metadata completeness, absent abstracts and affiliations, asymmetric citation coverage, and sparse graph connectivity. The dataset contains author records with associated citations, enabling evaluation of AND methods in settings closer to real-world open scholarly infrastructure scenarios. OC-AND is released as open data with complete provenance documentation and pipeline code, supporting reproducible research and the development of citation-aware disambiguation approaches.
 
 
-### INFO ARTICOLO
+To cite this paper: 
+
+To cite this repository: https://doi.org/10.5281/zenodo.23055586
 
 
 ## Indice
